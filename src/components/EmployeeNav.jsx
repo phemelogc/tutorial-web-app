@@ -13,7 +13,7 @@ export default function Navbar({ role = "employee", name = "User" }) {
 
         {role === "admin" ? (
           <>
-            <Link to="/admin">Dashboard</Link>
+            <Link to="/adminDash">Dashboard</Link>
             <Link to="/upload">Upload</Link>
             <Link to="/quiz">Quizzes</Link>
             <Link to="/progress">Progress</Link>

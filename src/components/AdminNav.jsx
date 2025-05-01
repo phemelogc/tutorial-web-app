@@ -8,7 +8,7 @@ export default function AdminNav({ name = "Admin" }) {
 
       <nav className="admin-links">
         <span className="admin-name">Welcome, {name}</span>
-        <Link to="/admin">Dashboard</Link>
+        <Link to="/adminDash">Dashboard</Link>
         <Link to="/upload">Upload</Link>
         <Link to="/quiz">Quizzes</Link>
         <Link to="/progress">Progress</Link>

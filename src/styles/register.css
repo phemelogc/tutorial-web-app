@@ -38,6 +38,7 @@
     border-radius: 6px;
     font-size: 1rem;
     width: 80%;
+    color: black;
 }
   
 .register-button {
@@ -58,9 +59,11 @@
 }
   
 .register-footer a {
-    color: #0077cc;
+    color: #000;
 }
 .register-footer a:hover{
     text-decoration: underline;
+    color: #0077ff;
+    cursor: pointer;
 }
   

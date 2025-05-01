@@ -1,28 +1,57 @@
 import "../styles/register.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGoogle, faFacebook} from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { useState } from "react";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+import { auth, db } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (password !== confirm) return alert("Passwords don't match!");
+
+    try {
+      const userCred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCred.user, { displayName: fullName });
+
+      await setDoc(doc(db, "users", userCred.user.uid), {
+        fullName,
+        email,
+        role: "employee",
+      });
+
+      navigate("./employeeDash");
+    } catch (err) {
+      alert("Registration failed: " + err.message);
+    }
+  };
+
   return (
     <div className="register-page">
       <div className="register-container">
         <h1 className="register-title">Create an account...</h1>
 
-        <form className="register-form">
-          <input className="register-input" type="text" placeholder="Full Name" />
-          <input className="register-input" type="email" placeholder="Email Address" />
-          <input className="register-input" type="password" placeholder="Password" />
-          <input className="register-input" type="password" placeholder="Confirm Password" />
-          <button className="register-button">Sign Up</button>
+        <form className="register-form" onSubmit={handleRegister}>
+          <input className="register-input" type="text" placeholder="Full Name" required value={fullName} onChange={(e) => setFullName(e.target.value)} />
+          <input className="register-input" type="email" placeholder="Email Address" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className="register-input" type="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input className="register-input" type="password" placeholder="Confirm Password" required value={confirm} onChange={(e) => setConfirm(e.target.value)} />
+          <button className="register-button" type="submit">Sign Up</button>
         </form>
 
-        <div className="divider">
-            <span>OR</span>
-        </div>
-        
+        <div className="divider"><span>OR</span></div>
+
         <div className="login-social-buttons">
-            <button><FontAwesomeIcon icon={faGoogle} /></button>
-            <button><FontAwesomeIcon icon={faFacebook} /></button>
+          <button><FontAwesomeIcon icon={faGoogle} /></button>
+          <button><FontAwesomeIcon icon={faFacebook} /></button>
         </div>
 
         <div className="register-footer">

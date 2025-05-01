@@ -1,0 +1,108 @@
+/* Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Full page layout */ 
+.employee-dashboard {
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f3f6fa;
+  display: flex;
+  flex-direction: column;
+}
+
+.employee-main {
+  flex: 1;
+  padding: 2rem 3rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.employee-main-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #222;
+  width: 100%;
+}
+
+/* Course cards */ 
+.employee-course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.employee-course-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.employee-course-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #003f5c;
+}
+
+.employee-course-description {
+  flex-grow: 1;
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.employee-course-actions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.employee-btn {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+}
+
+.employee-btn.enroll {
+  background-color: #003f5c;
+  color: white;
+}
+
+.employee-btn.enroll:hover {
+  background-color: #005072;
+}
+
+.employee-btn.quiz {
+  background-color: #ffc107;
+  color: #222;
+}
+
+.employee-btn.quiz:hover {
+  background-color: #e6ae00;
+}

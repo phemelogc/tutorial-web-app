@@ -1,44 +1,47 @@
-.admin-navbar {
+.navbar {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
   width: 100%;
-  padding: 1.5rem 2rem;
+  padding: 1.2rem 2rem;
   background-color: #1a1a2e;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
-  height: 70px; /* Set a fixed height for the navbar */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: 70px;
 }
   
-.admin-logo {
-  font-size: 1.7rem;
+.navbar-logo {
+  font-size: 1.6rem;
   font-weight: bold;
   color: #ffc107;
 }
+.navbar-logo link {
+  color: white;
+}
   
-.admin-links {
+.navbar-right {
   display: flex;
   gap: 1.5rem;
   align-items: center;
+}
+  
+.navbar-right a {
+  color: #ffc107;
+  text-decoration: none;
+  font-weight: 500;
   font-size: 0.95rem;
 }
   
-.admin-links a {
-  color: #eee;
-  font-weight: 500;
-  color: #ffc107;
-}
-  
-.admin-links a:hover {
+.navbar-right a:hover {
   text-decoration: underline;
 }
   
-.admin-name {
-  color: #aaa;
+.navbar-name {
+  color: #ddd;
+  font-size: 0.95rem;
   margin-right: 1rem;
-  font-style: italic;
 }
+  

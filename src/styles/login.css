@@ -162,4 +162,28 @@
   text-decoration: underline;
   cursor: pointer;
 }
-  
+/* Spinner overlay */
+.login-loading-screen {
+  position: fixed;
+  inset: 0;
+  background-color: white;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Spinner style (Google-ish) */
+.login-spinner {
+  width: 30px;
+  height: 30px;
+  border: 5px solid #002c49;
+  border-top: 5px solid transparent;
+  border-radius: 50%;
+  animation: login-spin 1s linear infinite;
+}
+
+@keyframes login-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

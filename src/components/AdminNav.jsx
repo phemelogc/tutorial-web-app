@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import "../styles/adminNav.css";
 
-export default function AdminNav({ name = "Admin" }) {
+export default function AdminNav() {
   return (
     <header className="admin-navbar">
+      <Link to="/adminDash">
       <h1 className="admin-logo">MechConnect</h1>
+      </Link>
 
       <nav className="admin-links">
-        <span className="admin-name">Welcome, {name}</span>
-        <Link to="/adminDash">Dashboard</Link>
         <Link to="/upload">Upload</Link>
         <Link to="/quiz">Quizzes</Link>
         <Link to="/progress">Progress</Link>

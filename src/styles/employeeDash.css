@@ -5,20 +5,13 @@
   padding: 0;
 }
 
-html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
+
 
 /* Full page layout */ 
 .employee-dashboard {
   min-height: 100vh;
   width: 100vw;
-  margin: 0;
-  padding: 0;
+  padding-top: 5rem;
   font-family: "Segoe UI", sans-serif;
   background: #f3f6fa;
   display: flex;
@@ -42,7 +35,7 @@ html, body {
 /* Course cards */ 
 .employee-course-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 1.5rem;
   width: 100%;
 }

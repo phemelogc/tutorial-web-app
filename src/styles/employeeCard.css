@@ -1,33 +1,95 @@
 .employee-card {
-    display: flex;
-    align-items: center;
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    gap: 1rem;
-  }
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  flex-wrap: wrap;
+}
+
+.admin-employee-item {
+  background: white;
+  color: black;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  width: 470px;
+  transition: transform 0.2s ease, box-shadow 0.2 ease;
+}
   
-  .employee-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+.employee-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.employee-avatar-empty{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #fff;
+}
   
-  .employee-info {
-    display: flex;
-    flex-direction: column;
-  }
+.employee-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+}
   
-  .employee-name {
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 0.2rem;
-  }
+.employee-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
   
-  .employee-detail {
-    font-size: 0.85rem;
-    color: #555;
-  }
+.employee-detail {
+  font-size: 0.9rem;
+  color: #555;
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+}
+.employee-btn-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
   
+.employee-view-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background-color: #1a1a2e;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.employee-report-btn{
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background-color: #ffc107;
+  color: #000;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+  
+.employee-view-btn:hover {
+  background-color: #005072;
+}  
+.employee-report-btn:hover{
+  background-color: #e6ae00;
+}

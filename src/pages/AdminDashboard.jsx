@@ -3,17 +3,46 @@ import "../styles/moduleCard.css";
 import AdminNav from "../components/AdminNav";
 import ModuleCard from "../components/moduleCard";
 import EmployeeCard from "../components/EmployeeCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function DashboardAdmin() {
+  const [adminName, setAdminName] = useState("");
   const [modules, setModules] = useState([]);
   const [employees, setEmployees] = useState([]);
+  const employeeRef = useRef(null);
   const [modulesLoading, setModulesLoading] = useState(true);
   const [employeesLoading, setEmployeesLoading] = useState(true);
 
+  const scrollToEmployees = () => {
+    if (employeeRef.current) {
+      employeeRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+    
+    if (user) {
+      try {
+        const snap = await getDocs(collection(db, "users"));
+        const currentUser = snap.docs.find(doc => doc.id === user.uid);
+        
+        if (currentUser) {
+          setAdminName(currentUser.data().fullName);
+        }
+      } catch (err) {
+      console.error("Error fetching admin name:", err);
+      }
+    }
+  });
+
     const fetchModules = async () => {
       try {
         const snap = await getDocs(collection(db, "modules"));
@@ -48,12 +77,18 @@ export default function DashboardAdmin() {
       <AdminNav/>
 
       <main className="admin-main">
-        <h1 className="admin-welcome">Hello Orapeleng 👋</h1>
+        <h1 className="admin-welcome">Hello {adminName || "Admin"} 👋</h1>
         <p className="admin-subtitle">Here’s your admin overview.</p>
 
         <div className="admin-overview">
           <div className="admin-stat-card">Total Modules: {modules.length}</div>
-          <div className="admin-stat-card">Total Employees: {employees.length}</div>
+          <div
+            className="admin-stat-card_admin-clickable"
+            onClick={scrollToEmployees}
+          >
+            <span>Total Employees: {employees.length}</span>
+            <FontAwesomeIcon icon={faArrowDown} className="arrow-icon" />
+          </div>
           <div className="admin-stat-card">Completed Trainings: 0</div>
         </div>
 
@@ -83,7 +118,7 @@ export default function DashboardAdmin() {
         </section>
 
         {/* Employees Section */}
-        <section className="admin-employees">
+        <section className="admin-employees" ref={employeeRef}>
           <h2 className="admin-section-title">Employees</h2>
           {employeesLoading ? (
             <div className="section-spinner-wrapper">
@@ -95,12 +130,14 @@ export default function DashboardAdmin() {
             <ul className="admin-employee-list">
               {employees.map((emp) => (
                 <EmployeeCard
-                  key={emp.id}
-                  name={emp.fullName}
-                  email={emp.email}
-                  avatar={emp.avatarUrl || null}
-                  department={emp.department || "N/A"}
-                />
+                key={emp.id}
+                name={emp.fullName}
+                email={emp.email}
+                avatar={emp.avatarUrl || null}
+                department={emp.department || "N/A"}
+                onView={() => alert(`Viewing ${emp.fullName}`)}
+                onReport={() => alert(`Reporting ${emp.fullName}`)}
+              />
               ))}
             </ul>
           )}

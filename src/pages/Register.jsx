@@ -8,7 +8,8 @@ import { auth, db } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -16,6 +17,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
+    const fullName = `${firstName} ${lastName}`;
     e.preventDefault();
     if (password !== confirm) return alert("Passwords don't match!");
 
@@ -49,7 +51,8 @@ export default function Register() {
           <h1 className="register-title">Create an account...</h1>
 
           <form className="register-form" onSubmit={handleRegister}>
-            <input className="register-input" type="text" placeholder="Full Name" required value={fullName} onChange={(e) => setFullName(e.target.value)} />
+            <input className="register-input" type="text" placeholder="First Name" required value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+            <input className="register-input" type="text" placeholder="Last Name" required value={lastName} onChange={(e) => setLastName(e.target.value)}/>
             <input className="register-input" type="email" placeholder="Email Address" required value={email} onChange={(e) => setEmail(e.target.value)} />
             <input className="register-input" type="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)} />
             <input className="register-input" type="password" placeholder="Confirm Password" required value={confirm} onChange={(e) => setConfirm(e.target.value)} />

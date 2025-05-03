@@ -6,6 +6,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { setPersistence, browserSessionPersistence, onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -13,10 +15,22 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/employeeDash", { replace: true }); // or auto-check role
+      }
+    });
+  
+    return () => unsubscribe();
+  }, [navigate]);
+
   const handleLogin = async (e) => {
+    
     e.preventDefault();
     setIsLoading(true);
     try {
+      await setPersistence(auth, browserSessionPersistence);
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       const uid = userCred.user.uid;
       const userRef = doc(db, "users", uid);

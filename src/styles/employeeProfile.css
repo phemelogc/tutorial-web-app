@@ -2,14 +2,13 @@
 .profile-container {
     font-family: "Segoe UI", sans-serif;
     width: 100vw;
-    margin: 0 auto;
-    padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: fit-content;
-    background-color: white;
-    margin-top: 10rem;
+    margin-top: -20%;
+    padding-bottom: 5rem;
+    background-color: #f3f6fa;
 }
   
 .profile-header {
@@ -35,9 +34,9 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 2.5rem;
     width: 700px;
+    height: 100%;
 }
   
 .profile-photo-section {
@@ -121,6 +120,8 @@
     border-radius: 6px;
     font-size: 1rem;
     transition: border 0.2s ease;
+    background-color: white;
+    color: black;
   }
   
   .profile-form-group input:focus {
@@ -146,7 +147,6 @@
     width: 100%;
   }
   
-  /* Action buttons */
   .profile-actions {
     display: flex;
     justify-content: center;

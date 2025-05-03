@@ -80,6 +80,15 @@
   background-color: #005072;
 }
 
+.module-btn.view {
+  background-color: #1a1a2e;
+  color: white;
+}
+
+.module-btn.view:hover {
+  background-color: #005072;
+}
+
 .module-btn.quiz {
   background-color: #ffc107;
   color: #222;

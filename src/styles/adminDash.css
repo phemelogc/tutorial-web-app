@@ -52,8 +52,9 @@
 
 .admin-video-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .admin-video-card {
@@ -80,25 +81,56 @@
   font-weight: bold;
   color: #333;
 }
+.admin-stat-card_admin-clickable {
+  flex: 1;
+  background-color: #fefefe;
+  border-left: 5px solid #ffc107;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-stat-card_admin-clickable:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-4px);
+}
+.arrow-icon{
+  opacity: 0;
+  margin-left: 250px;
+}
+
+.admin-stat-card .arrow-icon{
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  color: #555;
+}
+
+.admin-stat-card_admin-clickable:hover .arrow-icon {
+  opacity: 1;
+}
 
 .admin-employees {
   margin-top: 3rem;
 }
 
 .admin-employee-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   list-style: none;
-  padding: 0;
-  margin-top: 1rem;
+  margin-top: 1rem; 
+  margin-right: -1rem;
 }
 
-.admin-employee-item {
-  background: white;
-  color: black;
-  margin-bottom: 0.5rem;
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
 .admin-loading {
   padding: 1rem 0;
   font-size: 0.95rem;
@@ -131,3 +163,4 @@
   padding: 1.5rem 0;
   text-align: center;
 }
+

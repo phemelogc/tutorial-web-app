@@ -1,6 +1,6 @@
 import "../styles/employeeDash.css";
 import Navbar from "../components/EmployeeNav";
-import ModuleCard from "../components/ModuleCard";
+import ModuleCard from "../components/moduleCard";
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";

@@ -109,6 +109,7 @@ export default function DashboardAdmin() {
                   admin
                   title={mod.title}
                   description={mod.description}
+                  moduleId={mod.id}
                   onEdit={() => alert(`Edit ${mod.title}`)}
                   onDelete={() => alert(`Delete ${mod.title}`)}
                 />

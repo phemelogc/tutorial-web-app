@@ -8,45 +8,58 @@ export default function UploadModule() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [department, setDepartment] = useState(""); // ⬅️ new state
-  // const [videoFile, setVideoFile] = useState(null); // ⬅️ commenting this out
+  const [videoFile, setVideoFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleUpload = async (e) => {
     e.preventDefault();
     if (!title || !description || !department) return alert("All fields required");
-
+  
     setLoading(true);
     try {
-      // // 🔥 Upload video to Cloudinary
-      // const formData = new FormData();
-      // formData.append("file", videoFile);
-      // formData.append("upload_preset", "YOUR_UPLOAD_PRESET");
-
-      // const res = await fetch("https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/video/upload", {
-      //   method: "POST",
-      //   body: formData,
-      // });
-
-      // const data = await res.json();
-      // const videoUrl = data.secure_url;
-
+      let videoUrl = ""; // Default value for videoUrl in case no file is uploaded
+  
+      if (videoFile) {
+        // 🔥 Upload video to Cloudinary if a video is provided
+        const formData = new FormData();
+        formData.append("file", videoFile);
+        formData.append("upload_preset", "mech_connect");
+  
+        const res = await fetch("https://api.cloudinary.com/v1_1/mech-connect/video/upload", {
+          method: "POST",
+          body: formData,
+        });
+  
+        const data = await res.json();
+        console.log("Cloudinary response status", res.status);
+  
+        if (!res.ok) {
+          const errData = await res.text(); // grab raw response
+          console.error("Cloudinary error:", errData);
+          throw new Error("Cloudinary upload failed");
+        }
+  
+        videoUrl = data.secure_url; // If video is uploaded, store the URL
+      }
+  
       // 🧠 Save module info to Firestore
       await addDoc(collection(db, "modules"), {
         title,
         description,
         department,
-        videoUrl: "",
+        videoUrl, // Will be an empty string if no video is uploaded
         createdAt: serverTimestamp()
       });
-
+  
       alert("Module uploaded successfully!");
-      setTitle(""); setDescription(""); setDepartment(""); // setVideoFile(null);
+      setTitle(""); setDescription(""); setDepartment(""); setVideoFile(null);
     } catch (err) {
       alert("Upload failed: " + err.message);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="upload-page">
@@ -70,11 +83,12 @@ export default function UploadModule() {
             required
           >
             <option value="" disabled>Select Department</option>
-            <option value="Engineering">Engineering</option>
-            <option value="Marketing">Marketing</option>
-            <option value="HR">HR</option>
+            <option value="Engineering">Inventory</option>
+            <option value="Marketing">Procurement</option>
+            <option value="HR">Quality Assurance</option>
             <option value="Sales">Sales</option>
-            <option value="Support">Support</option>
+            <option value="Support">Marketing</option>
+            <option value="Support">Logistics</option>
           </select>
 
           <textarea
@@ -84,12 +98,12 @@ export default function UploadModule() {
             required
           />
           
-          {/* <input
+          <input
+            className="choose-btn"
             type="file"
             accept="video/*"
-            onChange={(e) => setVideoFile(e.target.files[0])}
-            required
-          /> */}
+            onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
+          />
           <button type="submit" disabled={loading}>
             {loading ? "Uploading..." : "Upload Module"}
           </button>

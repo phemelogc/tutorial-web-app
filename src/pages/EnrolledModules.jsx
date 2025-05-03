@@ -50,7 +50,7 @@ export default function EnrolledModules() {
             {modules.map((course, index) => (
               <ModuleCard
                 key={course.id || index}
-                id={course.id}
+                moduleId={course.id}
                 title={course.title}
                 department={course.department}
                 description={course.description}

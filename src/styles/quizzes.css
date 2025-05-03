@@ -1,0 +1,19 @@
+.quizzes-page-container {
+  padding: 3rem;
+  width: 100vw;
+  height: 100vh;
+  margin-top: 4rem;
+  background-color: white;
+}
+  
+.page-header, .page-description{
+  color: black;
+}
+.modules-list {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+  

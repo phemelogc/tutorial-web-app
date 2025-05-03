@@ -32,7 +32,6 @@ export default function ModuleView() {
   
       setModule(moduleSnap.data());
   
-      // fetch videos for this module (this part can stay the same)
       const videosQuery = query(
         collection(db, "moduleVideos"),
         where("moduleId", "==", moduleId)

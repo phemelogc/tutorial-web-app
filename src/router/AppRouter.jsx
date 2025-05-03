@@ -8,6 +8,8 @@ import EmployeeProfile from "../pages/EmployeeProfile";
 import AdminProfile from "../pages/AdminProfile";
 import EnrolledModules from "../pages/enrolledModules";
 import ModuleView from "../pages/ModuleView";
+import EditModule from "../pages/EditModule";
+import QuizzesPage from "../pages/Quizzes";
 
 export default function AppRouter() {
   return (
@@ -17,10 +19,12 @@ export default function AppRouter() {
       <Route path="/employeeDash" element={<EmployeeDash />} />
       <Route path="/adminDash" element={<AdminDashboard />} />
       <Route path="/upload" element={<UploadModule />} />
-      <Route path="employeeProfile" element={< EmployeeProfile />}/>
-      <Route path="adminProfile" element={<AdminProfile />} />
-      <Route path="enrolledModules" element={<EnrolledModules />} />
+      <Route path="/employeeProfile" element={< EmployeeProfile />}/>
+      <Route path="/adminProfile" element={<AdminProfile />} />
+      <Route path="/enrolledModules" element={<EnrolledModules />} />
       <Route path="/module/:moduleId" element={<ModuleView />} />
+      <Route path="/edit-module/:moduleId" element={<EditModule/>}/>
+      <Route path="/quizzes" element={<QuizzesPage/>}/>
 
     </Routes>
   );

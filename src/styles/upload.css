@@ -77,12 +77,14 @@
   background-color: white;
   color: black;
 }
-  
-.upload-form input[type="file"] {
+
+.choose-btn{
+  background-color: white;
   padding: 0.4rem;
   font-size: 0.95rem;
   align-self: flex-start;
   cursor: pointer;
+  color: black;
 }
   
 .upload-form button {

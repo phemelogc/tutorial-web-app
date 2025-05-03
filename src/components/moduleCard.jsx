@@ -1,94 +1,113 @@
 import "../styles/moduleCard.css";
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import { enrollUserInModule } from "../firebase/enrolledModules";
 import { useNavigate } from "react-router-dom";
+import { doc, deleteDoc } from "firebase/firestore";
 
-export default function ModuleCard({ 
-  title, 
-  department, 
-  description, 
-  admin = false, 
+export default function ModuleCard({
+  title,
+  department,
+  description,
+  admin = false,
   mode = "browse",
   moduleId,
-  onEdit, 
-  onDelete 
 }) {
-  
   const navigate = useNavigate();
-  
+
   const handleEnroll = async () => {
     const userId = auth.currentUser?.uid;
-    if (!userId) return alert("You're not logged in!");
-    
-    // Generate ID if not provided
-    
-    if(!moduleId){
-      console.error("Missing moduleId fro enrollment");
-      return alert("Error: Module ID not found");
-    }
-    
-    const result = await enrollUserInModule(userId, { 
-      title, 
-      department, 
-      description, 
-      id: moduleId
+    if (!userId) return alert("you're not logged in!");
+
+    if (!moduleId) return alert("error: module ID missing");
+
+    const result = await enrollUserInModule(userId, {
+      title,
+      department,
+      description,
+      id: moduleId,
     });
-    
+
     if (result.success) {
       alert("Enrolled successfully!");
-      navigate("/enrolledModules", { replace: false });
+      navigate("/enrolledModules");
     } else {
       alert("Enrollment failed: " + result.message);
     }
   };
-  
+
   const handleViewModule = () => {
-    // Navigate to module content/details page
-    navigate(`/module/${moduleId || title.toLowerCase().replace(/\s+/g, "_")}`);
+    if (!moduleId) return alert("module ID missing.");
+
+    if(admin){
+      navigate(`/edit-module/${moduleId}`);
+    } else{
+      navigate(`/module/${moduleId}`);
+    }
   };
-  
+
   const handleTakeQuiz = () => {
-    // Navigate to quiz page for this module
-    navigate(`/quiz/${moduleId || title.toLowerCase().replace(/\s+/g, "_")}`);
+    if (!moduleId) return alert("module ID missing.");
+    navigate(`/quiz/${moduleId}`);
   };
-  
-  // Render different buttons based on mode
+
+  const handleDelete = async () => {
+    if (!moduleId) return alert("module ID missing.");
+
+    const confirmed = window.confirm(
+      `are you sure you want to delete "${title}"? this can’t be undone.`
+    );
+    if (!confirmed) return;
+
+    try {
+      await deleteDoc(doc(db, "modules", moduleId));
+      alert("module deleted successfully!");
+      window.location.reload();
+    } catch (err) {
+      console.error("delete failed:", err);
+      alert("error deleting module: " + err.message);
+    }
+  };
+
   const renderButtons = () => {
     if (admin) {
       return (
         <>
-          <button className="module-btn enroll" onClick={onEdit}>Edit</button>
-          <button className="module-btn quiz" onClick={onDelete}>Delete</button>
+          <button className="module-btn enroll" onClick={() => navigate(`/edit-module/${moduleId}`)}>Edit</button>
+          <button className="module-btn quiz" onClick={handleDelete}>Delete</button>
         </>
-      );
-    } else if (mode === "enrolled") {
-      return (
-        <>
-          <button className="module-btn view" onClick={handleViewModule}>View</button>
-          <button className="module-btn quiz" onClick={handleTakeQuiz}>Take Quiz</button>
-        </>
-      );
-    } else {
-      // Default "browse" mode
-      return (
-        <button
-          className="module-btn enroll"
-          onClick={handleEnroll}
-        >
-          Enroll
-        </button>
       );
     }
+
+    switch (mode) {
+      case "enrolled":
+        return (
+          <>
+            <button className="module-btn view" onClick={handleViewModule}>View</button>
+            <button className="module-btn quiz" onClick={handleTakeQuiz}>Take Quiz</button>
+          </>
+        );
+      case "quiz":
+        return (
+          <>
+            <button className="module-btn quiz" onClick={handleTakeQuiz}>Generate Quiz</button>
+            <button className="module-btn view" onClick={handleViewModule}>View Module</button>
+          </>
+        );
+      default:
+        return (
+          <button className="module-btn enroll" onClick={handleEnroll}>Enroll</button>
+        );
+    }
   };
-  
+
   return (
     <div className="module-card">
-      <h3 className="module-card-title">{title}</h3>
-      <p className="module-card-department">{department}</p>
-      <p className="module-card-description">{description}</p>
-      <div className="module-card-actions">
-        {renderButtons()}
+      <div className="module-card-title">
+        <h3>{title}</h3>
+        <span className="module-card-department">{department}</span>
       </div>
+      <p className="module-card-description">{description}</p>
+      <div className="module-card-actions">{renderButtons()}</div>
     </div>
   );
 }

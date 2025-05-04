@@ -4,7 +4,7 @@ import Register from "../pages/Register";
 import EmployeeDash from "../pages/EmployeeDash";
 import AdminDashboard from "../pages/AdminDashboard";
 import UploadModule from "../pages/UploadModule";
-import EmployeeProfile from "../pages/EmployeeProfile";
+import EmployeeProfile from "../components/EmployeeProfile";
 import AdminProfile from "../pages/AdminProfile";
 import EnrolledModules from "../pages/enrolledModules";
 import ModuleView from "../pages/ModuleView";
@@ -19,7 +19,7 @@ export default function AppRouter() {
       <Route path="/employeeDash" element={<EmployeeDash />} />
       <Route path="/adminDash" element={<AdminDashboard />} />
       <Route path="/upload" element={<UploadModule />} />
-      <Route path="/employeeProfile" element={< EmployeeProfile />}/>
+      <Route path="/employeeProfile/:employeeId" element={< EmployeeProfile />}/>
       <Route path="/adminProfile" element={<AdminProfile />} />
       <Route path="/enrolledModules" element={<EnrolledModules />} />
       <Route path="/module/:moduleId" element={<ModuleView />} />

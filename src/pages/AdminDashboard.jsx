@@ -59,7 +59,7 @@ export default function DashboardAdmin() {
         const snap = await getDocs(collection(db, "users"));
         const employeesOnly = snap.docs
           .map(doc => ({ id: doc.id, ...doc.data() }))
-          .filter(user => user.role === "employee" || user.role === "user");
+          .filter(user => user.role === "Employee" || user.role === "user");
         setEmployees(employeesOnly);
       } catch (err) {
         console.error("Error fetching employees:", err);

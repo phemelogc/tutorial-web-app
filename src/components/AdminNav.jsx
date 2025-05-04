@@ -41,7 +41,6 @@ export default function AdminNav() {
       <nav className="admin-links">
         <Link to="/upload">Upload</Link>
         <Link to="/quizzes">Quizzes</Link>
-        <Link to="/progress">Progress</Link>
         <Link onClick={handleLogout}>Logout</Link> 
       </nav>
     </header>

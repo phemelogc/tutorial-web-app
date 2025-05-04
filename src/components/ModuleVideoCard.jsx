@@ -1,15 +1,22 @@
 import { useState } from "react";
 import "../styles/moduleVideoCard.css";
 
-export default function ModuleVideoCard({ video, isCompleted, onComplete }) {
+export default function ModuleVideoCard({ 
+  video, 
+  isCompleted = false, 
+  onComplete = () => {}, 
+  role = "employee",
+  onRemove
+}) {
   const [showVideo, setShowVideo] = useState(false);
-  const [setWatchTime] = useState(0);
   const [videoEnded, setVideoEnded] = useState(false);
 
-  // Track video progress when it's playing
+  // Track video progress when it's playing (only for employees)
   const handleTimeUpdate = (e) => {
+    // Skip progress tracking for admins
+    if (role === "admin") return;
+    
     const currentTime = Math.floor(e.target.currentTime);
-    setWatchTime(currentTime);
     
     // Automatically mark as complete if they've watched most of it
     const duration = e.target.duration;
@@ -20,6 +27,9 @@ export default function ModuleVideoCard({ video, isCompleted, onComplete }) {
   };
 
   const handleVideoEnd = () => {
+    // Skip completion tracking for admins
+    if (role === "admin") return;
+    
     if (!isCompleted) {
       setVideoEnded(true);
       onComplete();
@@ -27,7 +37,7 @@ export default function ModuleVideoCard({ video, isCompleted, onComplete }) {
   };
 
   return (
-    <div className={`video-card ${isCompleted ? "completed" : ""}`}>
+    <div className={`video-card ${isCompleted ? "completed" : ""} ${role === "admin" ? "admin-card" : ""}`}>
       <div className="video-thumbnail" onClick={() => setShowVideo(!showVideo)}>
         {!showVideo && (
           <>
@@ -37,7 +47,7 @@ export default function ModuleVideoCard({ video, isCompleted, onComplete }) {
               className="thumbnail-img"
             />
             <div className="play-button">▶️</div>
-            {isCompleted && <div className="completed-badge">✓</div>}
+            {role === "employee" && isCompleted && <div className="completed-badge">✓</div>}
           </>
         )}
       </div>
@@ -56,12 +66,6 @@ export default function ModuleVideoCard({ video, isCompleted, onComplete }) {
             <button onClick={() => setShowVideo(false)} className="close-video">
               Close Video
             </button>
-            
-            {!isCompleted && !videoEnded && (
-              <button onClick={onComplete} className="mark-complete">
-                Mark as Complete
-              </button>
-            )}
           </div>
         </div>
       )}
@@ -69,12 +73,27 @@ export default function ModuleVideoCard({ video, isCompleted, onComplete }) {
       <div className="video-info">
         <h3>{video.title}</h3>
         <p className="video-duration">{video.duration || "3:45"}</p>
-        {isCompleted ? (
-          <p className="status-completed">Completed ✓</p>
-        ) : (
-          <p className="status-pending">Not completed</p>
+        
+        {/* Only show completion status for employees */}
+        {role === "employee" && (
+          isCompleted ? (
+            <p className="status-completed">Completed ✓</p>
+          ) : (
+            <p className="status-pending">Not completed</p>
+          )
         )}
       </div>
+      
+      {/* Remove button only for admins */}
+      {role === "admin" && onRemove && (
+        <button 
+          type="button" 
+          className="remove-video-btn"
+          onClick={onRemove}
+        >
+          Remove Video
+        </button>
+      )}
     </div>
   );
 }

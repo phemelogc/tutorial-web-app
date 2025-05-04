@@ -170,6 +170,6 @@ export default function ModuleView() {
             )}
             </div> 
         )}
-    </div>
+      </div>
     );
 }

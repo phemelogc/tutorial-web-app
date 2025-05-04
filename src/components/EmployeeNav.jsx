@@ -3,7 +3,7 @@ import "../styles/employeeNav.css";
 import { signOut, getAuth } from "firebase/auth";
 import { useEffect } from "react";
 
-export default function Navbar() {
+export default function Navbar(id) {
   const auth = getAuth(); // Initialize Firebase Auth
 
   const handleLogout = async () => {
@@ -43,7 +43,7 @@ export default function Navbar() {
         <span className="navbar-name"></span>
 
         <Link to="/enrolledModules">My Modules</Link>
-        <Link to="/employeeProfile">Profile</Link>
+        <Link to={`/employeeProfile/${id}`}>Profile</Link>
         <Link onClick={handleLogout}>Logout</Link> 
       </div>
     </header>

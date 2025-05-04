@@ -29,7 +29,7 @@ export default function Register() {
       await setDoc(doc(db, "users", userCred.user.uid), {
         fullName,
         email,
-        role: "employee",
+        role: "Employee",
       });
 
       navigate("/employeeDash", { replace: true });

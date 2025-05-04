@@ -18,6 +18,11 @@
   width: 470px;
   transition: transform 0.2s ease, box-shadow 0.2 ease;
 }
+.admin-employee-item:hover{
+  transform: translateY(-4px);
+  transition: transform 0.2 ease-out;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
   
 .employee-avatar {
   width: 48px;
@@ -88,8 +93,45 @@
 }
   
 .employee-view-btn:hover {
-  background-color: #005072;
+  background-color: #e6ae00;
 }  
 .employee-report-btn:hover{
   background-color: #e6ae00;
 }
+.employee-link-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.employee-link-wrapper:hover {
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #e6ae00;
+}
+
+.employee-card-arrow {
+  font-size: 1.25rem;
+  color: #999;
+  transition: transform 0.2s ease;
+  margin-right: 20px;
+}
+
+.employee-link-wrapper:hover .employee-card-arrow {
+  transform: translateX(4px);
+}
+.employee-card-left {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.employee-department {
+  font-size: 0.9rem;
+  color: #777;
+}
+

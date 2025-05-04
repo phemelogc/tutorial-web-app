@@ -1,11 +1,13 @@
-import "../styles/EmployeeCard.css"
+import "../styles/EmployeeCard.css";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 
-export default function EmployeeCard({ name, email, avatar, department, onView, onReport }) {
+export default function EmployeeCard({ id, name, email, avatar, department }) {
   return (
     <li className="admin-employee-item">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+      <Link to={`/employeeProfile/${id}`} className="employee-link-wrapper">
+        <div className="employee-card-left">
           {avatar ? (
             <img
               src={avatar}
@@ -17,18 +19,17 @@ export default function EmployeeCard({ name, email, avatar, department, onView, 
               {name?.charAt(0)?.toUpperCase() || "?"}
             </div>
           )}
+
           <div className="employee-info">
             <p className="employee-name">{name}</p>
             <p className="employee-detail">{email}</p>
-            <p style={{ fontSize: "0.9rem", color: "#777" }}>{department}</p>
+            <p className="employee-department">{department}</p>
           </div>
         </div>
 
-        <div className="employee-btn-group">
-          <button className="employee-view-btn" onClick={onView}>View</button>
-          <button className="employee-report-btn" onClick={onReport}>Generate Report</button>
-        </div>
-      </div>
+        <FontAwesomeIcon icon={faArrowRightLong} className="employee-card-arrow"/>
+
+      </Link>
     </li>
   );
 }

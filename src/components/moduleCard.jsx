@@ -1,8 +1,8 @@
 import "../styles/moduleCard.css";
 import { auth, db } from "../firebase/firebase";
+import { getDoc, doc } from "firebase/firestore";
 import { enrollUserInModule } from "../firebase/enrolledModules";
 import { useNavigate } from "react-router-dom";
-import { doc, deleteDoc } from "firebase/firestore";
 
 export default function ModuleCard({
   title,
@@ -20,27 +20,35 @@ export default function ModuleCard({
 
     if (!moduleId) return alert("error: module ID missing");
 
-    const result = await enrollUserInModule(userId, {
-      title,
-      department,
-      description,
-      id: moduleId,
-    });
+    try {
+      const moduleSnap = await getDoc(doc(db, "modules", moduleId));
+      if (!moduleSnap.exists()) throw new Error("Module not found");
 
-    if (result.success) {
-      alert("Enrolled successfully!");
-      navigate("/enrolledModules");
-    } else {
-      alert("Enrollment failed: " + result.message);
+      const fullModuleData = moduleSnap.data();
+      console.log("Full module data:", fullModuleData);
+
+      const result = await enrollUserInModule(userId, {
+        ...fullModuleData,
+        id: moduleId,
+      });
+
+      if (result.success) {
+        alert("Enrolled successfully!");
+        navigate("/enrolledModules");
+      } else {
+        alert("Enrollment failed: " + result.message);
+      }
+    } catch (err) {
+      alert("Something went wrong: " + err.message);
     }
   };
 
   const handleViewModule = () => {
     if (!moduleId) return alert("module ID missing.");
 
-    if(admin){
+    if (admin) {
       navigate(`/edit-module/${moduleId}`);
-    } else{
+    } else {
       navigate(`/module/${moduleId}`);
     }
   };
@@ -50,31 +58,20 @@ export default function ModuleCard({
     navigate(`/quiz/${moduleId}`);
   };
 
-  const handleDelete = async () => {
-    if (!moduleId) return alert("module ID missing.");
-
-    const confirmed = window.confirm(
-      `are you sure you want to delete "${title}"? this can’t be undone.`
-    );
-    if (!confirmed) return;
-
-    try {
-      await deleteDoc(doc(db, "modules", moduleId));
-      alert("module deleted successfully!");
-      window.location.reload();
-    } catch (err) {
-      console.error("delete failed:", err);
-      alert("error deleting module: " + err.message);
-    }
-  };
-
   const renderButtons = () => {
     if (admin) {
+      if (mode === "quiz") {
+        return (
+          <button className="module-btn quiz" onClick={handleTakeQuiz}>
+            Generate Quiz
+          </button>
+        );
+      }
+
       return (
-        <>
-          <button className="module-btn enroll" onClick={() => navigate(`/edit-module/${moduleId}`)}>Edit</button>
-          <button className="module-btn quiz" onClick={handleDelete}>Delete</button>
-        </>
+        <button className="module-btn enroll" onClick={() => navigate(`/edit-module/${moduleId}`)}>
+          Edit
+        </button>
       );
     }
 
@@ -82,20 +79,30 @@ export default function ModuleCard({
       case "enrolled":
         return (
           <>
-            <button className="module-btn view" onClick={handleViewModule}>View</button>
-            <button className="module-btn quiz" onClick={handleTakeQuiz}>Take Quiz</button>
+            <button className="module-btn view" onClick={handleViewModule}>
+              View
+            </button>
+            <button className="module-btn quiz" onClick={handleTakeQuiz}>
+              Take Quiz
+            </button>
           </>
         );
       case "quiz":
         return (
           <>
-            <button className="module-btn quiz" onClick={handleTakeQuiz}>Generate Quiz</button>
-            <button className="module-btn view" onClick={handleViewModule}>View Module</button>
+            <button className="module-btn quiz" onClick={handleTakeQuiz}>
+              Generate Quiz
+            </button>
+            <button className="module-btn view" onClick={handleViewModule}>
+              View Module
+            </button>
           </>
         );
       default:
         return (
-          <button className="module-btn enroll" onClick={handleEnroll}>Enroll</button>
+          <button className="module-btn enroll" onClick={handleEnroll}>
+            Enroll
+          </button>
         );
     }
   };

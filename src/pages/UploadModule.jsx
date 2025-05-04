@@ -7,59 +7,59 @@ import AdminNav from "../components/AdminNav";
 export default function UploadModule() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [department, setDepartment] = useState(""); // ⬅️ new state
-  const [videoFile, setVideoFile] = useState(null);
+  const [department, setDepartment] = useState("");
+  const [videoFiles, setVideoFiles] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleUpload = async (e) => {
     e.preventDefault();
     if (!title || !description || !department) return alert("All fields required");
-  
+
     setLoading(true);
     try {
-      let videoUrl = ""; // Default value for videoUrl in case no file is uploaded
-  
-      if (videoFile) {
-        // 🔥 Upload video to Cloudinary if a video is provided
-        const formData = new FormData();
-        formData.append("file", videoFile);
-        formData.append("upload_preset", "mech_connect");
-  
-        const res = await fetch("https://api.cloudinary.com/v1_1/mech-connect/video/upload", {
-          method: "POST",
-          body: formData,
-        });
-  
-        const data = await res.json();
-        console.log("Cloudinary response status", res.status);
-  
-        if (!res.ok) {
-          const errData = await res.text(); // grab raw response
-          console.error("Cloudinary error:", errData);
-          throw new Error("Cloudinary upload failed");
+      let videoUrls = [];
+
+      if (videoFiles.length > 0) {
+        for (const file of videoFiles) {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", "mech_connect");
+
+          const res = await fetch("https://api.cloudinary.com/v1_1/mech-connect/video/upload", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!res.ok) {
+            const errText = await res.text();
+            console.error("Cloudinary upload failed:", errText);
+            throw new Error("Cloudinary upload failed");
+          }
+
+          const data = await res.json();
+          videoUrls.push(data.secure_url);
         }
-  
-        videoUrl = data.secure_url; // If video is uploaded, store the URL
       }
-  
-      // 🧠 Save module info to Firestore
+
       await addDoc(collection(db, "modules"), {
         title,
         description,
         department,
-        videoUrl, // Will be an empty string if no video is uploaded
-        createdAt: serverTimestamp()
+        videoUrls: videoUrls.length > 0 ? videoUrls : [],
+        createdAt: serverTimestamp(),
       });
-  
+
       alert("Module uploaded successfully!");
-      setTitle(""); setDescription(""); setDepartment(""); setVideoFile(null);
+      setTitle("");
+      setDescription("");
+      setDepartment("");
+      setVideoFiles([]);
     } catch (err) {
       alert("Upload failed: " + err.message);
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="upload-page">
@@ -76,7 +76,7 @@ export default function UploadModule() {
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          
+
           <select
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
@@ -97,14 +97,13 @@ export default function UploadModule() {
             onChange={(e) => setDescription(e.target.value)}
             required
           />
-          
-          <input
-            className="choose-btn"
-            type="file"
-            accept="video/*"
-            onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
-          />
-          <button type="submit" disabled={loading}>
+
+          <label className="choose-btn">
+            Choose Video
+            <input type="file" accept="video/*" onChange={handleUpload} hidden multiple/>
+          </label>
+
+          <button className="upload-btn" type="submit" disabled={loading}>
             {loading ? "Uploading..." : "Upload Module"}
           </button>
         </form>

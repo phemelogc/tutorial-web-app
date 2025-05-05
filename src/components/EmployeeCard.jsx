@@ -4,9 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 
 export default function EmployeeCard({ id, name, email, avatar, department }) {
+  // Debug log to see what ID is being received
+  console.log("EmployeeCard received ID:", id);
+  
   return (
     <li className="admin-employee-item">
-      <Link to={`/employeeProfile/${id}`} className="employee-link-wrapper">
+      <Link to={`/profiles/${id}`} className="employee-link-wrapper">
         <div className="employee-card-left">
           {avatar ? (
             <img
@@ -28,7 +31,6 @@ export default function EmployeeCard({ id, name, email, avatar, department }) {
         </div>
 
         <FontAwesomeIcon icon={faArrowRightLong} className="employee-card-arrow"/>
-
       </Link>
     </li>
   );

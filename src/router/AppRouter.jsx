@@ -4,12 +4,14 @@ import Register from "../pages/Register";
 import EmployeeDash from "../pages/EmployeeDash";
 import AdminDashboard from "../pages/AdminDashboard";
 import UploadModule from "../pages/UploadModule";
-import EmployeeProfile from "../components/EmployeeProfile";
+import EmployeeProfile from "../pages/EmployeeProfile";
 import AdminProfile from "../pages/AdminProfile";
 import EnrolledModules from "../pages/enrolledModules";
 import ModuleView from "../pages/ModuleView";
 import EditModule from "../pages/EditModule";
-import QuizzesPage from "../pages/Quizzes";
+import QuizzesPage from "../pages/Quizzes.jsx";
+import QuizPreview from "../pages/QuizPreview";
+import Profiles from "../pages/Profiles";
 
 export default function AppRouter() {
   return (
@@ -20,11 +22,13 @@ export default function AppRouter() {
       <Route path="/adminDash" element={<AdminDashboard />} />
       <Route path="/upload" element={<UploadModule />} />
       <Route path="/employeeProfile/:employeeId" element={< EmployeeProfile />}/>
+      <Route path="/profiles/:id" element={<Profiles/>}/>
       <Route path="/adminProfile" element={<AdminProfile />} />
       <Route path="/enrolledModules" element={<EnrolledModules />} />
       <Route path="/module/:moduleId" element={<ModuleView />} />
       <Route path="/edit-module/:moduleId" element={<EditModule/>}/>
       <Route path="/quizzes" element={<QuizzesPage/>}/>
+      <Route path="/quiz-preview/:moduleId" element={<QuizPreview />} />
 
     </Routes>
   );

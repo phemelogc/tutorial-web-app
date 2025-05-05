@@ -132,6 +132,7 @@ export default function DashboardAdmin() {
               {employees.map((emp) => (
                 <EmployeeCard
                 key={emp.id}
+                id={emp.id}
                 name={emp.fullName}
                 email={emp.email}
                 avatar={emp.avatarUrl || null}

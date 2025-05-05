@@ -11,6 +11,7 @@ export default function ModuleCard({
   admin = false,
   mode = "browse",
   moduleId,
+  onGenerate,
 }) {
   const navigate = useNavigate();
 
@@ -55,7 +56,7 @@ export default function ModuleCard({
 
   const handleTakeQuiz = () => {
     if (!moduleId) return alert("module ID missing.");
-    navigate(`/quiz/${moduleId}`);
+    onGenerate(moduleId);
   };
 
   const renderButtons = () => {

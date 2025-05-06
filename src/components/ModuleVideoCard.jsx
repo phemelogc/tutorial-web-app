@@ -57,7 +57,9 @@ export default function ModuleVideoCard({
           <video
             controls
             autoPlay
-            src={video.videoUrl}
+            src={video.videoUrls?.map((url, i) => (
+              <video key={i} src={url} controls />
+            ))}
             onTimeUpdate={handleTimeUpdate}
             onEnded={handleVideoEnd}
           />

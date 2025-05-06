@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { getDoc, doc, collection, getDocs, query, where, updateDoc, arrayUnion } from "firebase/firestore";
+import { getDoc, doc, updateDoc, arrayUnion, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import ModuleVideoCard from "../components/ModuleVideoCard";
 import NavBar from "../components/EmployeeNav";
@@ -13,7 +13,7 @@ export default function ModuleView() {
   const auth = getAuth();
   
   const [module, setModule] = useState(null);
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState(() => []);
   const [completedVideos, setCompletedVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -32,17 +32,22 @@ export default function ModuleView() {
   
       setModule(moduleSnap.data());
   
-      const videosQuery = query(
-        collection(db, "moduleVideos"),
-        where("moduleId", "==", moduleId)
-      );
-      const videoSnap = await getDocs(videosQuery);
-      const videoList = videoSnap.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const moduleData = moduleSnap.data();
+      setModule(moduleData);
+
+      const videoList = Array.isArray(moduleData.videoUrls)
+        ? moduleData.videoUrls.map((url, index) => ({
+        id: `video-${index}`,
+        url,
+      }))
+      : [];
+
       setVideos(videoList);
-  
+
+      console.log("Videos pulled for module:", videoList);
+
+      setVideos(videoList);
+      
       const progressRef = doc(db, "userProgress", userId);
       const progressSnap = await getDoc(progressRef);
   
@@ -109,6 +114,23 @@ export default function ModuleView() {
     }
   };
 
+  const handleUnenroll = async () => {
+    const confirmUnenroll = window.confirm("are you sure you wanna unenroll from this module? 👀");
+
+    if (!confirmUnenroll) return;
+
+    try {
+      const userId = auth.currentUser.uid;
+      await deleteDoc(doc(db, "users", userId, "enrolledModules", moduleId));
+      
+      navigate("/enrolledModules");
+    } catch (error) {
+      console.error("error unenrolling:", error);
+      alert("couldn’t unenroll. try again later.");
+    }
+  };
+
+
   return (
     <div className="module-view-container">
         <NavBar/>
@@ -168,8 +190,16 @@ export default function ModuleView() {
                     </button>
                 </div>
             )}
+            
+            
             </div> 
+            
         )}
+        <div className="unenroll-container">
+          <button className="unenroll-btn" onClick={handleUnenroll}>
+            Unenroll
+          </button>
+        </div>
       </div>
     );
 }

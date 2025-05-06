@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/adminNav.css";
 import { signOut, getAuth } from "firebase/auth";
 import { useEffect } from "react";
@@ -6,12 +6,13 @@ import { useEffect } from "react";
 export default function AdminNav() {
 
   const auth = getAuth();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
 
-      window.location.replace("/");
+      navigate("/", {replace: true});
       
     } catch (error) {
       console.error("Admin logout error:", error);
@@ -39,7 +40,8 @@ export default function AdminNav() {
       </Link>
 
       <nav className="admin-links">
-        <Link to="/upload">Upload</Link>
+        <Link to="/adminDash">Modules</Link>
+        <Link to="/employees">Employees</Link>
         <Link to="/quizzes">Quizzes</Link>
         <Link onClick={handleLogout}>Logout</Link> 
       </nav>

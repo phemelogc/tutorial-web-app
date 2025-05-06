@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { setPersistence, browserSessionPersistence, onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 
@@ -83,17 +81,6 @@ export default function Login() {
             <p className="forgot-text">Forgot password?</p>
             <button className="login-button" type="submit">Login</button>
           </form>
-
-          <div className="divider"><span>OR</span></div>
-
-          <div className="login-social-buttons">
-            <button><FontAwesomeIcon icon={faGoogle} /></button>
-            <button><FontAwesomeIcon icon={faFacebook} /></button>
-          </div>
-
-          <div className="login-footer">
-            <p>Don’t have an account? <a href="/register">Sign up</a></p>
-          </div>
         </div>
       </div>
     </>

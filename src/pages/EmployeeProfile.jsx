@@ -102,15 +102,6 @@ export default function EmployeeProfile() {
         // you'd do a db update here if editing names/department
     };
 
-    if (loading) {
-        return (
-            <div className="profile-loading">
-                <div className="spinner"></div>
-                <p>Loading profile...</p>
-            </div>
-        );
-    }
-
     return (
         <div className="profile-container">
             <NavBar />
@@ -120,7 +111,12 @@ export default function EmployeeProfile() {
                 <p>Manage your personal information</p>
             </div>
 
-            <div className="profile-content">
+            {loading ? (
+                <div className="section-spinner-wrapper">
+                    <div className="section-spinner"></div>
+                </div>
+            ) : (
+                <div className="profile-content">
                 <div className="profile-photo-section">
                     <div className="profile-photo-container">
                         <div className="profile-photo-placeholder">
@@ -257,6 +253,7 @@ export default function EmployeeProfile() {
                     </form>
                 </div>
             </div>
+            )}
         </div>
     );
 }

@@ -101,13 +101,12 @@ export default function UploadModule() {
           <label className="choose-btn">
             Choose Video
             <input
-  type="file"
-  accept="video/*"
-  multiple
-  hidden
-  onChange={(e) => setVideoFiles([...e.target.files])}
-/>
-
+              type="file"
+              accept="video/*"
+              multiple
+              hidden
+              onChange={(e) => setVideoFiles([...e.target.files])}
+            />
           </label>
 
           <button className="upload-btn" type="submit" disabled={loading}>

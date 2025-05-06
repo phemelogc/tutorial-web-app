@@ -3,6 +3,7 @@
   width: 100vw;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 2rem 2rem;
   align-items: start;
@@ -115,6 +116,33 @@
   background-color: #e6b800;
   transform: scale(1.03);
 }
+.unenroll-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 50px;
+}
+.unenroll-btn {
+  padding: 10px 16px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: 600;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  
+}
+
+.unenroll-btn:hover {
+  background-color: #d9363e;
+}
+
 
 .module-loading {
   display: flex;

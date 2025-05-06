@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "../styles/quizPreview.css"; // Style this as needed
+import "../styles/quizPreview.css";
+import NavBar from "../components/AdminNav";
 
 const SAMPLE_QUESTIONS = [
   {
@@ -29,6 +30,7 @@ function getRandomQuestions(fullSet, count) {
 const QuizPreview = () => {
   const { moduleId } = useParams();
   const [quizQuestions, setQuizQuestions] = useState<{ question: string; options: string[]; correct: string }[]>([]);
+  const [loading] = useState(true);
 
   useEffect(() => {
     const selected = getRandomQuestions(SAMPLE_QUESTIONS, 20);
@@ -44,22 +46,31 @@ const QuizPreview = () => {
 
   return (
     <div className="quiz-preview-container">
-      <h1>Quiz Preview</h1>
-      <p>Module ID: {moduleId}</p>
+      <NavBar/>
 
-      {quizQuestions.map((q, index) => (
-        <div key={index} className="quiz-question-block">
-          <h4>Q{index + 1}: {q.question}</h4>
-          <ul className="quiz-options">
-            {q.options.map((opt, i) => (
-              <li key={i}>
-                <input type="radio" name={`q${index}`} disabled />
-                <label>{opt}</label>
-              </li>
-            ))}
-          </ul>
+      <h1 className="header">Quiz Preview</h1>
+      <p className="module-title">Module ID: {moduleId}</p>
+
+
+      {loading ? (
+        <div className="section-spinner-wrapper">
+          <div className="section-spinner"></div>
         </div>
-      ))}
+      ) : (
+        quizQuestions.map((q, index) => (
+          <div key={index} className="quiz-question-block">
+            <h4>Q{index + 1}: {q.question}</h4>
+            <ul className="quiz-options">
+              {q.options.map((opt, i) => (
+                <li key={i}>
+                  <input type="radio" name={`q${index}`} disabled />
+                  <label>{opt}</label>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      )}
 
       <button onClick={handleSaveQuiz} className="save-quiz-btn">Save Quiz</button>
     </div>

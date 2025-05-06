@@ -1,137 +1,64 @@
 .employee-card {
   display: flex;
   align-items: center;
-  background: white;
+  justify-content: space-between;
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  flex-wrap: wrap;
+  margin: 0.5rem 0;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  width: 450px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-.admin-employee-item {
-  background: white;
-  color: black;
-  margin-bottom: 1.5rem;
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  width: 470px;
-  transition: transform 0.2s ease, box-shadow 0.2 ease;
+.employee-card:hover {
+  transform: translateY(-5px);
 }
-.admin-employee-item:hover{
-  transform: translateY(-4px);
-  transition: transform 0.2 ease-out;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+
+.employee-card-left {
+  display: flex;
+  align-items: center;
 }
-  
-.employee-avatar {
-  width: 48px;
-  height: 48px;
+
+.employee-avatar,
+.employee-avatar-empty {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  object-fit: cover;
-}
-.employee-avatar-empty{
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-color: #ccc;
+  background-color: #1a1a2e;
+  font-size: 1.5rem;
+  color: #ffc107;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  color: #fff;
-}
-  
-.employee-info {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: hidden;
-}
-  
-.employee-name {
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0.2rem;
-}
-  
-.employee-detail {
-  font-size: 0.9rem;
-  color: #555;
-  word-break: break-word;
-  overflow-wrap: break-word;
-
-}
-.employee-btn-group {
-  display: flex;
-  flex-shrink: 0;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-  
-.employee-view-btn {
-  padding: 0.4rem 0.8rem;
-  border: none;
-  background-color: #1a1a2e;
-  color: #fff;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  margin-right: 1rem;
 }
 
-.employee-report-btn{
-  padding: 0.4rem 0.8rem;
-  border: none;
-  background-color: #ffc107;
-  color: #000;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-  
-.employee-view-btn:hover {
-  background-color: #e6ae00;
-}  
-.employee-report-btn:hover{
-  background-color: #e6ae00;
-}
-.employee-link-wrapper {
+.employee-card-details {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex: 1;
   gap: 1rem;
-  text-decoration: none;
-  color: inherit;
+  position: relative;
+  color: #1a2c2c;
 }
 
-.employee-link-wrapper:hover {
-  background-color: #f9f9f9;
-  border-radius: 6px;
-  cursor: pointer;
-  color: #e6ae00;
+.employee-info {
+  flex: 1;
 }
 
-.employee-card-arrow {
-  font-size: 1.25rem;
-  color: #999;
-  transition: transform 0.2s ease;
+.arrow-icon {
+  font-size: 20px;
   margin-right: 20px;
+  opacity: 1;
+  color: black;
+  transition: transform 0.2s ease;
 }
 
-.employee-link-wrapper:hover .employee-card-arrow {
-  transform: translateX(4px);
+.employee-card:hover .arrow-icon {
+  transform: translateX(5px);
 }
-.employee-card-left {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.employee-department {
-  font-size: 0.9rem;
-  color: #777;
-}
-

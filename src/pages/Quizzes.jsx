@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase/firebase"; 
-import ModuleCard from "../components/ModuleCard"; 
+import ModuleCard from "../components/moduleCard"; 
 import "../styles/quizzes.css";
 import "../styles/moduleCard.css";
 import NavBar from "../components/AdminNav";
@@ -48,7 +48,9 @@ const QuizzesPage = () => {
       </p>
 
       {loading ? (
-        <p>Loading modules...</p>
+        <div className="section-spinner-wrapper">
+          <div className="section-spinner"></div>
+        </div>
       ) : (
         <div className="modules-list">
           {modules.map((module) => (

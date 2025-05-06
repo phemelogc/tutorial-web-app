@@ -77,7 +77,7 @@
 }
 
 .module-btn.enroll:hover {
-  background-color: #e6ae00;
+  background-color: #ffc107;
   color: #000;
 }
 
@@ -96,6 +96,6 @@
 }
 
 .module-btn.quiz:hover {
-  background-color: #e6ae00;
-  color: #000;
+  background-color: #1a1a2e;
+  color: #fff;
 }

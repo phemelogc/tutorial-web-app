@@ -1,37 +1,38 @@
 import "../styles/EmployeeCard.css";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 
 export default function EmployeeCard({ id, name, email, avatar, department }) {
-  // Debug log to see what ID is being received
-  console.log("EmployeeCard received ID:", id);
-  
+  const navigate = useNavigate();
+
+  const handleView = () => {
+    navigate(`/profiles/${id}`);
+  };
+
   return (
-    <li className="admin-employee-item">
-      <Link to={`/profiles/${id}`} className="employee-link-wrapper">
-        <div className="employee-card-left">
-          {avatar ? (
-            <img
-              src={avatar}
-              alt={`${name}'s avatar`}
-              className="employee-avatar"
-            />
-          ) : (
-            <div className="employee-avatar-empty">
-              {name?.charAt(0)?.toUpperCase() || "?"}
-            </div>
-          )}
+    <li className="employee-card" onClick={handleView}>
+  <div className="employee-card-left">
+    {avatar ? (
+      <img src={avatar} alt={`${name}'s avatar`} className="employee-avatar" />
+    ) : (
+      <div className="employee-avatar-empty">
+        {name?.charAt(0)?.toUpperCase() || "?"}
+      </div>
+    )}
+  </div>
 
-          <div className="employee-info">
-            <p className="employee-name">{name}</p>
-            <p className="employee-detail">{email}</p>
-            <p className="employee-department">{department}</p>
-          </div>
-        </div>
+  <div className="employee-card-details">
+    <div className="employee-info">
+      <h3 className="employee-name">{name}</h3>
+      <p className="employee-department">{department}</p>
+      <p className="employee-email">{email}</p>
+    </div>
+    <div className="arrow-icon">
+      <FontAwesomeIcon icon={faArrowRightLong} />
+    </div>
+  </div>
+</li>
 
-        <FontAwesomeIcon icon={faArrowRightLong} className="employee-card-arrow"/>
-      </Link>
-    </li>
   );
 }

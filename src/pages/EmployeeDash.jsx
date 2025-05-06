@@ -16,11 +16,25 @@ export default function DashboardEmployee() {
       setLoading(false);
       return;
     }
-
+  
     console.log("Logged in as:", user.uid);
-
+  
     const fetchModules = async () => {
       try {
+        // Fetch user profile
+        const userDocSnap = await getDocs(collection(db, "users"));
+        const currentUserData = userDocSnap.docs.find(doc => doc.id === user.uid)?.data();
+  
+        if (!currentUserData || !currentUserData.department) {
+          console.warn("User department not found.");
+          setModules([]);
+          return;
+        }else{
+          console.log("User department:", currentUserData.department);
+        }
+  
+        const userDept = currentUserData.department;
+  
         const [allSnap, enrolledSnap] = await Promise.all([
           getDocs(collection(db, "modules")),
           getDocs(collection(db, "users", user.uid, "enrolledModules"))
@@ -29,10 +43,14 @@ export default function DashboardEmployee() {
         const allModules = allSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         const enrolledModuleIds = new Set(enrolledSnap.docs.map(doc => doc.id));
   
-        const availableModules = allModules.filter(module => !enrolledModuleIds.has(module.id));
+        const availableModules = allModules.filter(
+          (module) =>
+            module.department === userDept && !enrolledModuleIds.has(module.id)
+        );
+  
         setModules(availableModules);
       } catch (err) {
-        console.error("Failed to fetch modules:", err);
+        console.error("Failed to fetch modules or user:", err);
       } finally {
         setLoading(false);
       }
@@ -40,6 +58,7 @@ export default function DashboardEmployee() {
   
     fetchModules();
   }, [user]);
+  
 
   return (
     <div className="employee-dashboard">

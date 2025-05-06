@@ -10,10 +10,48 @@
   padding-top: 8rem;
 }
 
+.admin-header{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 40px;
+  gap: 810px;
+
+}
+.add-employee{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin-left: 7rem;
+  height: auto;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a2e;
+  color: white;
+  border-radius: 10px;
+  border-color: green;
+}
+.add-employee:hover{
+  background-color: #ffc107;
+  color: black;
+}
+.add-icon{
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
 .admin-welcome {
-  font-size: 2rem;
+  display: flex;
+  flex-wrap: wrap;
   color: #1a1a2e;
   margin-bottom: 3rem;
+  width: auto;
+  height: auto;
+}
+.admin-welcome h1{
+  font-size: 2rem;
 }
 
 .admin-subtitle {
@@ -91,7 +129,6 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   font-weight: bold;
   color: #333;
-  cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
   justify-content: space-between;
@@ -99,37 +136,8 @@
   gap: 20px;
 }
 
-.admin-stat-card_admin-clickable:hover {
-  background-color: #f0f0f0;
-  transform: translateY(-4px);
-}
-.arrow-icon{
-  opacity: 0;
-  margin-left: 250px;
-}
-
-.admin-stat-card .arrow-icon{
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  font-size: 1rem;
-  margin-left: 0.5rem;
-  color: #555;
-}
-
-.admin-stat-card_admin-clickable:hover .arrow-icon {
-  opacity: 1;
-}
-
 .admin-employees {
   margin-top: 3rem;
-}
-
-.admin-employee-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-  list-style: none;
-  margin-top: 1rem; 
-  margin-right: -1rem;
 }
 
 .admin-loading {

@@ -38,7 +38,7 @@ export default function ModuleView() {
       const videoList = Array.isArray(moduleData.videoUrls)
         ? moduleData.videoUrls.map((url, index) => ({
         id: `video-${index}`,
-        url,
+        videoUrl: url,
       }))
       : [];
 
@@ -184,16 +184,13 @@ export default function ModuleView() {
                     <p>You've watched all videos in this module.</p>
                     <button 
                         className="take-quiz-btn"
-                        onClick={() => navigate(`/quiz/${moduleId}`)}
+                        onClick={() => navigate(`/quiz-attempt/${moduleId}`)}
                     >
                     Take Quiz
                     </button>
                 </div>
             )}
-            
-            
-            </div> 
-            
+            </div>    
         )}
         <div className="unenroll-container">
           <button className="unenroll-btn" onClick={handleUnenroll}>

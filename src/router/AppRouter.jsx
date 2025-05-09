@@ -13,6 +13,9 @@ import QuizzesPage from "../pages/Quizzes.jsx";
 import QuizPreview from "../pages/QuizPreview";
 import Profiles from "../pages/Profiles";
 import Employees from "../pages/Employees.jsx";
+import CreateOrEditQuiz from "../pages/CreateOrEditQuiz";
+import QuizAttemptPage from "../pages/QuizAttemptPage";
+import QuizResultsPage from "../pages/QuizResultsPage";
 
 export default function AppRouter() {
   return (
@@ -30,7 +33,10 @@ export default function AppRouter() {
       <Route path="/edit-module/:moduleId" element={<EditModule/>}/>
       <Route path="/quizzes" element={<QuizzesPage/>}/>
       <Route path="/quiz-preview/:moduleId" element={<QuizPreview />} />
-      <Route path="/employees" element={<Employees/>} />
+      <Route path="/employees" element={<Employees />} />
+      <Route path="/create-quiz/:moduleId" element={<CreateOrEditQuiz />} />
+      <Route path="/quiz-attempt/:moduleId" element={<QuizAttemptPage />} />
+      <Route path="/quiz-results" element={<QuizResultsPage />} />
 
     </Routes>
   );

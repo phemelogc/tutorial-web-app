@@ -11,7 +11,7 @@ export default function ModuleCard({
   admin = false,
   mode = "browse",
   moduleId,
-  onGenerate,
+ // onGenerate,
 }) {
   const navigate = useNavigate();
 
@@ -56,14 +56,19 @@ export default function ModuleCard({
 
   const handleTakeQuiz = () => {
     if (!moduleId) return alert("module ID missing.");
-    onGenerate(moduleId);
+    navigate(`/quiz-attempt/${moduleId}`);
   };
+  const handleGenerateQuiz = () => {
+    if (!moduleId) return alert("module ID missing.");
+    navigate(`/quiz-preview/${moduleId}`);
+  }
+  
 
   const renderButtons = () => {
     if (admin) {
       if (mode === "quiz") {
         return (
-          <button className="module-btn quiz" onClick={handleTakeQuiz}>
+          <button className="module-btn quiz" onClick={handleGenerateQuiz}>
             Generate Quiz
           </button>
         );

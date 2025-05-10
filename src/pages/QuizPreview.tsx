@@ -48,9 +48,6 @@ const QuizPreview: React.FC = () => {
   }, [moduleId]);
 
   const handleEdit = () => navigate(`/create-quiz/${moduleId}`);
- // const handleEdit = () => navigate(`/CreateOrEditQuiz`);
-
-
   const handleSubmit = () => alert('Quiz published successfully!');
 
   if (loading) {
@@ -63,68 +60,66 @@ const QuizPreview: React.FC = () => {
 
   if (error || !quiz) {
     return (
-      <div className="quiz-preview-container">
-        <NavBar />
-        <div className="quiz-header">
-          <h2>Quiz Preview</h2>
-          <p>Module ID: <strong>{moduleId}</strong></p>
-        </div>
-        <div className="quiz-info">
-          <p className="error-message">No quiz found for this module.</p>
-          <button className="save-quiz-btn" onClick={handleEdit}>
-            Create/Edit Quiz
-          </button>
+      <div className="container">
+        <div className="quiz-preview-container">
+          <NavBar />
+          <div className="quiz-header">
+            <h2>Quiz Preview</h2>
+            <p>Module ID: <strong>{moduleId}</strong></p>
+          </div>
+          <div className="quiz-info">
+            <p className="error-message">No quiz found for this module.</p>
+            <button className="save-quiz-btn" onClick={handleEdit}>
+              Create/Edit Quiz
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="quiz-preview-container">
-      <NavBar />
-      <div className="quiz-header">
-        <h2>Quiz Preview</h2>
-        <p>Module ID: <strong>{moduleId}</strong></p>
-      </div>
+    <div className="container">
+      <div className="quiz-preview-container">
+        <NavBar />
+        <div className="quiz-header">
+          <h2>Quiz Preview</h2>
+          <p>Module ID: <strong>{moduleId}</strong></p>
+        </div>
 
-      <div className="quiz-info">
-        <p><strong>Quiz Title:</strong> {quiz.title}</p>
-        <p><strong>Module Code:</strong> {quiz.moduleCode}</p>
-        <p><strong>Description:</strong></p>
-        <p className="quiz-description">{quiz.description}</p>
-      </div>
+        <div className="quiz-info">
+          <p><strong>Quiz Title:</strong> {quiz.title}</p>
+          <p><strong>Module Code:</strong> {quiz.moduleCode}</p>
+          <p><strong>Description:</strong></p>
+          <p className="quiz-description">{quiz.description}</p>
+        </div>
 
-      <div className="quiz-question-list">
-        {quiz.questions.length > 0 ? (
-          quiz.questions.map((q, index) => (
-            <div key={index} className="quiz-question-block">
-              <h4>Q{index + 1}: {q.question}</h4>
-              <ul className="quiz-options">
-                {q.options.map((opt, i) => (
-                  <li key={i}>
-                    <label>
-                      <input
-                        type="radio"
-                        name={`q${index}`}
-                        disabled
-                        checked={opt === q.correctAnswer}
-                        readOnly
-                      />
-                      {opt}
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        ) : (
-          <p>No questions added yet.</p>
-        )}
-      </div>
+        <div className="quiz-question-list">
+          {quiz.questions.length > 0 ? (
+            quiz.questions.map((q, index) => (
+              <div key={index} className="quiz-question-block">
+                <h4>Q{index + 1}: {q.question}</h4>
+                <ul className="quiz-options">
+                  {q.options.map((opt, i) => (
+                    <li
+                      key={i}
+                      className={`quiz-option-item ${opt === q.correctAnswer ? 'correct' : ''}`}
+                    >
+                    {opt}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          ) : (
+            <p>No questions added yet.</p>
+          )}
+        </div>
 
-      <div className="button-row">
-        <button className="save-quiz-btn" onClick={handleEdit}>Edit Quiz</button>
-        <button className="save-quiz-btn" onClick={handleSubmit}>Publish Quiz</button>
+        <div className="button-row">
+          <button className="save-quiz-btn" onClick={handleEdit}>Edit Quiz</button>
+          <button className="save-quiz-btn" onClick={handleSubmit}>Publish Quiz</button>
+        </div>
       </div>
     </div>
   );

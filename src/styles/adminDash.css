@@ -13,9 +13,9 @@
 .admin-header{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: auto;
   height: 40px;
-  gap: 810px;
+  gap: 750px;
 
 }
 .add-employee{
@@ -94,6 +94,7 @@
   grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
   gap: 1.5rem;
   width: 100%;
+  align-items: start;
 }
 
 .admin-video-card {
@@ -103,6 +104,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   font-weight: 500;
   color: #333;
+  max-width: 460px;
 }
 .admin-overview {
   display: flex;
@@ -174,4 +176,16 @@
   padding: 1.5rem 0;
   text-align: center;
 }
+.admin-module-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
+}
 
+.admin-filter {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  min-width: 200px;
+}

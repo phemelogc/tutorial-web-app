@@ -87,7 +87,8 @@
 }
 
 .module-btn.view:hover {
-  background-color: #005072;
+  background-color: #ffc107;
+  color: black;
 }
 
 .module-btn.quiz {

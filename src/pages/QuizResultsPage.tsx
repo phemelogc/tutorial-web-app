@@ -1,6 +1,7 @@
 // Phemelo Gaborone
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/quizPreview.css";
+import NavBar from "../components/EmployeeNav"
 
 export default function QuizResultsPage() {
   const location = useLocation();
@@ -19,6 +20,9 @@ export default function QuizResultsPage() {
   const percentage = Math.round((score / total) * 100);
 
   return (
+
+    <div className="container">
+      <NavBar />
     <div className="quiz-preview-container">
       <div className="quiz-header">
         <h2>{quizTitle} — Results</h2>
@@ -45,6 +49,7 @@ export default function QuizResultsPage() {
           Back to Home
         </button>
       </div>
+    </div>
     </div>
   );
 }

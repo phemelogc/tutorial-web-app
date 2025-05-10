@@ -4,13 +4,13 @@ import { signOut, getAuth } from "firebase/auth";
 import { useEffect } from "react";
 
 export default function Navbar(id) {
-  const auth = getAuth(); // Initialize Firebase Auth
+  const auth = getAuth();
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
     
-      window.location.replace("/");
+      window.replace("/");
       
     } catch (error) {
       console.error("Logout error:", error);
@@ -42,6 +42,7 @@ export default function Navbar(id) {
       <div className="navbar-right">
         <span className="navbar-name"></span>
 
+        <Link to="/employeeDash">Available Modules</Link>
         <Link to="/enrolledModules">My Modules</Link>
         <Link to={`/employeeProfile/${id}`}>Profile</Link>
         <Link onClick={handleLogout}>Logout</Link> 

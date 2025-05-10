@@ -70,20 +70,6 @@ export default function ModuleVideoCard({
         </div>
       )}
       
-      <div className="video-info">
-        <h3>{video.title}</h3>
-        <p className="video-duration">{video.duration || "3:45"}</p>
-        
-        {/* Only show completion status for employees */}
-        {role === "employee" && (
-          isCompleted ? (
-            <p className="status-completed">Completed ✓</p>
-          ) : (
-            <p className="status-pending">Not completed</p>
-          )
-        )}
-      </div>
-      
       {/* Remove button only for admins */}
       {role === "admin" && onRemove && (
         <button 

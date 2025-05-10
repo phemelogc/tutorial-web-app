@@ -5,6 +5,7 @@ import { db } from "../firebase/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import "../styles/quizPreview.css";
+import NavBar from "../components/EmployeeNav"
 
 export default function QuizAttemptPage() {
   const { moduleId } = useParams();
@@ -114,6 +115,9 @@ export default function QuizAttemptPage() {
   const progress = ((currentIndex + 1) / quizData.length) * 100;
 
   return (
+
+    <div className="container">
+      <NavBar />
     <div className="quiz-preview-container">
       <div className="quiz-header">
         <h2>{quizTitle} — Attempt</h2>
@@ -124,36 +128,34 @@ export default function QuizAttemptPage() {
         <p>Question {currentIndex + 1} of {quizData.length}</p>
         <p>Time Left: <strong>{timer}s</strong></p>
         <div style={{ background: "#444", height: "8px", borderRadius: "4px" }}>
-          <div
-            style={{
-              background: "#00cec9",
-              height: "100%",
-              width: `${progress}%`,
-              borderRadius: "4px",
-              transition: "width 0.3s ease"
-            }}
-          />
+          <div className="quiz-progress-bar">
+            <div
+              className="quiz-progress-bar-inner"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
       </div>
 
       <div className="quiz-question-block">
-        <h3>{currentQuestion.questionText}</h3>
+        <h4>{currentQuestion.questionText}</h4>
         <ul className="quiz-options">
-          {currentQuestion.options.map((opt: string, idx: number) => (
-            <li key={idx}>
-              <label>
-                <input
-                  type="radio"
-                  name="option"
-                  value={opt}
-                  checked={answers[currentIndex] === opt}
-                  onChange={() => handleSelect(opt)}
-                />
-                {opt}
-              </label>
-            </li>
-          ))}
-        </ul>
+  {currentQuestion.options.map((opt, idx) => {
+    const isSelected = answers[currentIndex] === opt;
+
+    return (
+      <li key={idx}>
+        <label
+          className={`quiz-options-label ${isSelected ? "selected" : ""}`}
+          onClick={() => handleSelect(opt)}
+        >
+          {opt}
+        </label>
+      </li>
+    );
+  })}
+</ul>
+
       </div>
 
       <div className="button-row">
@@ -170,6 +172,7 @@ export default function QuizAttemptPage() {
           </button>
         )}
       </div>
+    </div>
     </div>
   );
 }

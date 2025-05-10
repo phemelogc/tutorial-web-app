@@ -4,7 +4,7 @@ import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import "../styles/upload.css";
 import NavBar from "../components/AdminNav";
-import ModuleVideoCard from "../components/ModuleVideoCard"; // Import the ModuleVideoCard component
+import ModuleVideoCard from "../components/ModuleVideoCard";
 
 interface ModuleForm {
   title: string;
@@ -199,24 +199,32 @@ export default function EditModule() {
             {videoFiles && videoFiles.length > 0 ? (
               <div className="video-grid">
                 {videoFiles.map((file, idx) => (
-                  <div key={idx} className="video-grid-item">
-                    <p className="file-name">{file.name}</p>
-                    <video width="100%" controls src={URL.createObjectURL(file)} />
-                  </div>
+                  <ModuleVideoCard
+                    key={idx}
+                    video={{
+                      id: `new-${idx}`,
+                      videoUrl: URL.createObjectURL(file),
+                      title: file.name,
+                    }}
+                    role="admin" onRemove={undefined}        />
                 ))}
               </div>
             ) : form.videoUrls && form.videoUrls.length > 0 ? (
               <div className="video-grid">
                 {form.videoUrls.map((url, idx) => (
-                  <div key={idx} className="video-grid-item">
-                    <video width="100%" controls src={url} />
-                  </div>
+                  <ModuleVideoCard
+                    key={idx}
+                    video={{
+                      id: `existing-${idx}`,
+                      videoUrl: url,
+                      title: `Video ${idx + 1}`,
+                    }}
+                    role="admin" onRemove={undefined}        />
                 ))}
               </div>
             ) : (
               <p>No videos uploaded.</p>
             )}
-            
           </div>
 
           <div className="button-row">

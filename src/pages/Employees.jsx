@@ -10,8 +10,26 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Employees(){
 
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedDept, setSelectedDept] = useState("all");
     const [employeesLoading, setEmployeesLoading] = useState(true);
     const [employees, setEmployees] = useState([]);
+
+    const filteredEmployees = employees.filter((emp) => {
+      const matchesSearch =
+        emp.fullName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        emp.department?.toLowerCase().includes(searchQuery.toLowerCase());
+    
+      const matchesDept =
+        selectedDept === "all" || emp.department === selectedDept;
+    
+      return matchesSearch && matchesDept;
+      });
+    
+      const uniqueDepartments = [
+        "all",
+        ...new Set(employees.map((emp) => emp.department).filter(Boolean)),
+      ];
 
     useEffect(() => {
 
@@ -43,6 +61,26 @@ export default function Employees(){
             <FontAwesomeIcon icon={faPlus} className="add-icon" /> Add Employee
           </button>
         </div>
+
+        <input
+            type="text"
+            placeholder="Search by name or department..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="admin-search"
+        />
+        
+        <select
+            value={selectedDept}
+            onChange={(e) => setSelectedDept(e.target.value)}
+            className="admin-filter"
+        >
+        {uniqueDepartments.map((dept) => (
+            <option key={dept} value={dept}>
+                {dept === "all" ? "All Departments" : dept}
+            </option>
+        ))}
+        </select>
         
         {employeesLoading ? (
             <div className="section-spinner-wrapper">
@@ -52,7 +90,7 @@ export default function Employees(){
             <p className="admin-empty">No employees found.</p>
             ) : (
                 <ul className="admin-employee-list">
-                    {employees.map((emp) => (
+                    {filteredEmployees.map((emp) => (
                         <EmployeeCard
                             key={emp.id}
                             id={emp.id}
@@ -66,6 +104,6 @@ export default function Employees(){
                     ))}
                 </ul>
             )}
-    </div>
-)
+        </div>
+    )
 }

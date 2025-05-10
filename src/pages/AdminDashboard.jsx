@@ -95,7 +95,7 @@ export default function DashboardAdmin() {
     <span>Total Employees: {employees.length}</span>
   )}
 </div>
-          <div className="admin-stat-card">Completed Trainings: 0</div>
+          
         </div>
 
         {/* Modules Section */}

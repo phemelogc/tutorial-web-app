@@ -14,7 +14,7 @@ export default function QuizAttemptPage() {
   const currentUser = auth.currentUser;
 
   interface Question {
-    questionText: string;
+    question: string;
     options: string[];
   }
 
@@ -138,7 +138,7 @@ export default function QuizAttemptPage() {
       </div>
 
       <div className="quiz-question-block">
-        <h4>{currentQuestion.questionText}</h4>
+        <h4>{currentQuestion.question}</h4>
         <ul className="quiz-options">
   {currentQuestion.options.map((opt, idx) => {
     const isSelected = answers[currentIndex] === opt;

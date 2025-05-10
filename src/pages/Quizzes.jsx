@@ -44,7 +44,7 @@ const QuizzesPage = () => {
       <NavBar />
       <h1 className="page-header">Quizzes</h1>
       <p className="page-description">
-        Select a module to generate a quiz or view its content.
+        Select a module to generate a quiz.
       </p>
 
       {loading ? (

@@ -10,7 +10,7 @@ export default function Navbar(id) {
     try {
       await signOut(auth);
     
-      window.replace("/");
+      window.location.replace("/");
       
     } catch (error) {
       console.error("Logout error:", error);
